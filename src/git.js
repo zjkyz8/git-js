@@ -712,8 +712,11 @@
     * @param {Function} [then]
     * @returns {*}
     */
-   Git.prototype.addRemote = function (remoteName, remoteRepo, then) {
-      return this._run(['remote', 'add', remoteName, remoteRepo], function (err) {
+   Git.prototype.addRemote = function (remoteName, remoteRepo, args, then) {
+      var cmdArgs = ['remote', 'add', remoteName, remoteRepo];
+      if(args && Array.isArray(args))
+        cmdArgs.push.apply(cmdArgs, args)
+      return this._run(cmdArgs, function (err) {
          then && then(err);
       });
    };
